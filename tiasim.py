@@ -397,6 +397,20 @@ class FGA015(Photodiode):
         self.capacitance = 1.5e-12
         self.responsivity = 0.95
 
+class FGA021(Photodiode):
+    """
+        Thorlabs FGA021 InGaAs photodiode, TO-5 with flat window
+        https://www.thorlabs.com/thorproduct.cfm?partnumber=FGA015
+        1 mm diameter active area
+        
+        100 pF capacitance at Vr = 3 V
+        responsivity 1.04 A/W at 1590 nm
+        50 nA dark current at 1 Vr
+    """
+    def __init__(self):
+        self.capacitance = 100e-12
+        self.responsivity = 1.04
+
 class FD80FC(Photodiode):
     """
         Fermionics FD80FC InGaAs photodiode, with FC fiber-connector
@@ -514,7 +528,7 @@ class TIA():
             The -3 dB bandwidth of the TIA
             Found by searching for the frequency where ZM(f) = ZM(0)/sqrt(2) 
         """
-        f = numpy.logspace(1,10,1e6)
+        f = numpy.logspace(1,10,int(1e6))
         zm = numpy.abs( self.ZM(f) )
         try:
             ind = min( min(numpy.where( zm < zm[0]/numpy.sqrt(2.0)) ) )
